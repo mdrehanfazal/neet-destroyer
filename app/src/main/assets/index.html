@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>NEET Destroyer v2.0</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <div class="brand-icon">🎯</div>
+      <div>
+        <div class="brand-title">NEET DESTROYER</div>
+        <div class="brand-subtitle" id="header-target-tag">AIR &lt; 1000 ENGINE</div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge badge-countdown" id="days-countdown">192 Days</div>
+      <div class="badge badge-streak">🔥 <span id="header-streak-count">12</span></div>
+      <button class="btn btn-sm" onclick="window.NEETApp.openSettingsModal()" style="padding:4px 8px;font-size:14px;background:transparent;border:none;color:var(--text-muted);">⚙️</button>
+    </div>
+  </header>
+
+  <!-- Main Scrollable Screen -->
+  <main class="main-content">
+
+    <!-- TAB 1: DASHBOARD -->
+    <section id="tab-dashboard" class="tab-pane active">
+      <!-- Target College Card -->
+      <div class="card" style="background: linear-gradient(135deg, #131E33, #0F172A); border: 1px solid rgba(6, 182, 212, 0.3);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <span class="badge prio-A" style="font-size:10px;margin-bottom:6px;">PRIMARY TARGET GOAL</span>
+            <h2 id="dash-college-name" style="font-size:18px;font-weight:900;color:#fff;margin-top:2px;">AIIMS New Delhi</h2>
+            <div id="dash-college-air" style="font-size:12px;color:var(--primary);font-weight:700;">Target AIR &lt; 50</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:10px;color:var(--text-muted);font-weight:700;">SAFE SCORE</div>
+            <div id="dash-college-cutoff" style="font-size:18px;font-weight:900;color:var(--accent-gold);">715+ / 720</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:11px;color:var(--text-muted);">Max Allowed Mistakes in Exam:</span>
+          <span style="font-size:11px;font-weight:700;color:#FB7185;">Phy: ≤2 | Chem: ≤2 | Bio: ≤1</span>
+        </div>
+      </div>
+
+      <!-- Quick Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="dash-solved-today" style="color:var(--primary);">42</div>
+          <div class="stat-label">Active Recall Qs Today</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="dash-focus-today" style="color:var(--accent-green);">95m</div>
+          <div class="stat-label">Deep Work Logged</div>
+        </div>
+      </div>
+
+      <!-- Syllabus Completion Progress -->
+      <div class="card">
+        <div class="card-title">
+          <span>📚 Complete NEET Syllabus (97 Chapters)</span>
+          <span id="dash-syllabus-prog-text" style="font-size:11px;color:var(--primary);font-weight:700;">0/97 (0%)</span>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">
+          Database: <strong style="color:var(--accent-gold);">30,850 Target Questions</strong> consolidated in <strong style="color:var(--primary);">neet_questions.db</strong>
+        </div>
+        <div class="progress-container">
+          <div id="dash-syllabus-prog-bar" class="progress-bar progress-cyan" style="width: 0%;"></div>
+        </div>
+
+        <!-- Subject bars -->
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:2px;">
+              <span>⚛️ Physics (30 Chs • 8,900 Qs)</span>
+              <span id="dash-phy-text" style="color:var(--text-muted);">0/30</span>
+            </div>
+            <div class="progress-container" style="height:6px;">
+              <div id="dash-phy-bar" class="progress-bar progress-rose" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:2px;">
+              <span>🧪 Chemistry (30 Chs • 9,400 Qs)</span>
+              <span id="dash-chem-text" style="color:var(--text-muted);">0/30</span>
+            </div>
+            <div class="progress-container" style="height:6px;">
+              <div id="dash-chem-bar" class="progress-bar progress-gold" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:2px;">
+              <span>🌿 Biology (38 Chs • 12,550 Qs)</span>
+              <span id="dash-bio-text" style="color:var(--text-muted);">0/38</span>
+            </div>
+            <div class="progress-container" style="height:6px;">
+              <div id="dash-bio-bar" class="progress-bar progress-green" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brutal Honesty Score & Rank Calculator -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎯 Real-Time AIR Rank Predictor</span>
+          <span class="badge prio-A" style="font-size:10px;">Brutal Honesty</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">
+          Adjust your current mock test score to see your projected All India Rank & cutoff gap:
+        </p>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:12px;font-weight:700;">Mock Score:</span>
+          <span id="calc-current-score" style="font-size:18px;font-weight:900;color:var(--primary);">640</span>
+          <span id="calc-predicted-air" style="font-size:13px;font-weight:800;color:var(--accent-gold);">AIR ~ 17,900</span>
+        </div>
+
+        <input type="range" id="score-calculator-slider" min="300" max="720" value="640" step="5" style="width:100%;accent-color:var(--primary);margin-bottom:8px;">
+
+        <div id="calc-score-gap" style="font-size:11px;font-weight:700;padding:8px;background:var(--bg-elevated);border-radius:8px;">
+          ⚠️ Gap to AIIMS New Delhi: 75 Marks (19 more questions needed)
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;">
+        <button class="btn btn-primary" onclick="window.NEETApp.switchTab('tab-anki')">
+          🧠 Anki Flashcards
+        </button>
+        <button class="btn btn-accent" onclick="window.NEETApp.switchTab('tab-mock')">
+          📝 NTA Mock Test
+        </button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button class="btn btn-block" onclick="window.NEETApp.shareScorecard()" style="background:var(--bg-card);border:1px solid var(--border-color);font-size:12px;">
+          📤 Share Preparation Milestone
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 2: COMPLETE NEET SYLLABUS (97 CHAPTERS | 30,850+ QUESTIONS) -->
+    <section id="tab-syllabus" class="tab-pane">
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <h3 style="font-size:16px;font-weight:800;color:#fff;">Complete NEET Syllabus Database (97 Chapters)</h3>
+          <span class="badge prio-A" style="font-size:10px;">30,850+ Target Qs</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);">
+          Complete 97 NCERT Chapters with 30,850+ target question database consolidated in <code style="color:var(--primary);">neet_questions.db</code> (SQLite).
+        </p>
+      </div>
+
+      <!-- Search Input -->
+      <div style="margin-bottom:10px;">
+        <input type="text" id="syllabus-search" class="form-control" placeholder="🔍 Search among 97 chapters or 30,000+ topics...">
+      </div>
+
+      <!-- Scope Filter Pills -->
+      <div class="pill-group" style="margin-bottom:8px;">
+        <button class="pill active" data-syllabus-scope="All">All 97 Chapters (30,850 Qs)</button>
+        <button class="pill" data-syllabus-scope="NMC">79 NMC Rationalized Core</button>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="pill-group">
+        <button class="pill active" data-syllabus-sub="All">All Subjects (97)</button>
+        <button class="pill" data-syllabus-sub="Physics">Physics (30 • 8.9k Qs)</button>
+        <button class="pill" data-syllabus-sub="Chemistry">Chemistry (30 • 9.4k Qs)</button>
+        <button class="pill" data-syllabus-sub="Biology">Biology (38 • 12.5k Qs)</button>
+      </div>
+
+      <div class="pill-group">
+        <button class="pill active" data-syllabus-class="All">Class 11 &amp; 12</button>
+        <button class="pill" data-syllabus-class="11">Class 11 (51 Chs)</button>
+        <button class="pill" data-syllabus-class="12">Class 12 (47 Chs)</button>
+      </div>
+
+      <!-- Chapter List Container -->
+      <div id="syllabus-chapters-list">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: ANKI SPACED REPETITION -->
+    <section id="tab-anki" class="tab-pane">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div>
+          <h3 style="font-size:16px;font-weight:800;color:#fff;">Active Recall Anki Engine</h3>
+          <div id="anki-deck-counter" style="font-size:11px;color:var(--text-muted);font-weight:700;">1 / 18</div>
+        </div>
+        <span class="badge badge-countdown">Ebbinghaus Curve</span>
+      </div>
+
+      <!-- Subject Filter -->
+      <div class="pill-group">
+        <button class="pill active" data-anki-filter="All">All Decks</button>
+        <button class="pill" data-anki-filter="Biology">🌿 Biology NCERT</button>
+        <button class="pill" data-anki-filter="Chemistry">🧪 Chemistry Core</button>
+        <button class="pill" data-anki-filter="Physics">⚛️ Physics Formulae</button>
+      </div>
+
+      <!-- 3D Flip Card -->
+      <div class="flashcard-wrapper" onclick="window.NEETApp.flipAnkiCard()">
+        <div class="flashcard" id="anki-flashcard">
+          <!-- Front -->
+          <div class="flashcard-front">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="badge prio-A" id="anki-card-tag">High-Yield NCERT</span>
+                <span id="anki-card-sub" style="font-size:10px;color:var(--text-muted);font-weight:700;">Subject</span>
+              </div>
+              <p id="anki-front-text" style="font-size:15px;font-weight:700;color:#fff;margin-top:24px;line-height:1.4;">
+                Tap card to reveal answer...
+              </p>
+            </div>
+            <div style="text-align:center;font-size:11px;color:var(--primary);font-weight:700;">
+              👆 Tap to Flip (Active Recall)
+            </div>
+          </div>
+
+          <!-- Back -->
+          <div class="flashcard-back">
+            <div>
+              <span class="badge badge-streak" style="margin-bottom:8px;">NCERT SOLUTION</span>
+              <p id="anki-back-text" style="font-size:13px;color:#F1F5F9;line-height:1.5;white-space:pre-line;">
+                Answer details will display here...
+              </p>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-color);padding-top:8px;">
+              <span id="anki-card-ref" style="font-size:10px;color:var(--accent-gold);font-weight:700;">NCERT Ref</span>
+              <span style="font-size:10px;color:var(--text-muted);">Rate difficulty below:</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SM-2 Rating Buttons -->
+      <div class="anki-buttons">
+        <button class="anki-btn anki-btn-again" onclick="window.NEETApp.rateAnki('again')">
+          <span>🔴 Again</span>
+          <span style="font-size:9px;opacity:0.8;">&lt;10m</span>
+        </button>
+        <button class="anki-btn anki-btn-hard" onclick="window.NEETApp.rateAnki('hard')">
+          <span>🟠 Hard</span>
+          <span style="font-size:9px;opacity:0.8;">1 day</span>
+        </button>
+        <button class="anki-btn anki-btn-good" onclick="window.NEETApp.rateAnki('good')">
+          <span>🟢 Good</span>
+          <span style="font-size:9px;opacity:0.8;">3 days</span>
+        </button>
+        <button class="anki-btn anki-btn-easy" onclick="window.NEETApp.rateAnki('easy')">
+          <span>🔵 Easy</span>
+          <span style="font-size:9px;opacity:0.8;">7 days</span>
+        </button>
+      </div>
+
+      <!-- Deck Stats -->
+      <div style="margin-top:14px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;padding:10px;display:flex;justify-content:space-around;text-align:center;font-size:11px;">
+        <div>🔴 <strong id="anki-count-again">3</strong> Again</div>
+        <div>🟠 <strong id="anki-count-hard">5</strong> Hard</div>
+        <div>🟢 <strong id="anki-count-good">18</strong> Good</div>
+        <div>🔵 <strong id="anki-count-easy">14</strong> Easy</div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DEEP WORK FOCUS ENGINE -->
+    <section id="tab-focus" class="tab-pane">
+      <div style="text-align:center;margin-bottom:12px;">
+        <h3 style="font-size:16px;font-weight:800;color:#fff;">Cal Newport Deep Work Focus</h3>
+        <p style="font-size:11px;color:var(--text-muted);">Zero Distraction • Screen Locked Active</p>
+      </div>
+
+      <!-- Presets -->
+      <div style="display:flex;justify-content:center;gap:8px;margin-bottom:10px;">
+        <button class="btn btn-sm btn-primary" data-timer-preset="25" onclick="window.NEETApp.setFocusPreset(25)">25m Pomodoro</button>
+        <button class="btn btn-sm" data-timer-preset="50" onclick="window.NEETApp.setFocusPreset(50)">50m Deep Work</button>
+        <button class="btn btn-sm" data-timer-preset="200" onclick="window.NEETApp.setFocusPreset(200)">200m NEET Marathon</button>
+      </div>
+
+      <!-- Circular Timer SVG -->
+      <div class="timer-circle-container">
+        <svg class="timer-svg" width="220" height="220" viewBox="0 0 200 200">
+          <circle class="timer-circle-bg" cx="100" cy="100" r="90"></circle>
+          <circle id="timer-svg-circle" class="timer-circle-progress" cx="100" cy="100" r="90" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="timer-display">
+          <div class="timer-time" id="focus-time-display">25:00</div>
+          <div class="timer-status" id="focus-timer-status">Ready</div>
+        </div>
+      </div>
+
+      <!-- Ambient Sound Dropdown -->
+      <div style="max-width:240px;margin:0 auto 16px;">
+        <label class="form-label" style="text-align:center;">🎧 Ambient Study Audio (Synthesized)</label>
+        <select id="ambient-sound-select" class="form-control" style="font-size:12px;text-align:center;">
+          <option value="none">🔇 Audio Off</option>
+          <option value="binaural">🧠 40Hz Gamma Binaural Beats</option>
+          <option value="rain">🌧️ Heavy Rainstorm Noise</option>
+          <option value="whitenoise">💨 Steady White Noise</option>
+        </select>
+      </div>
+
+      <!-- Controls -->
+      <div style="display:flex;justify-content:center;gap:12px;">
+        <button id="focus-start-btn" class="btn btn-primary" style="min-width:140px;" onclick="window.NEETApp.toggleFocusTimer()">
+          ▶ Start Focus
+        </button>
+        <button class="btn" onclick="window.NEETApp.resetFocusTimer()">
+          🔄 Reset
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 5: NTA MOCK TEST & OMR -->
+    <section id="tab-mock" class="tab-pane">
+      <!-- Mock Intro Card -->
+      <div id="mock-intro-card" class="card">
+        <div class="card-title">
+          <span>📝 NTA Standard Mock Engine</span>
+          <span class="badge prio-A">Strict Negative Marking</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">
+          Calibrated to real NEET exam rules: <strong>+4 marks</strong> for correct, <strong>-1 mark</strong> for incorrect penalty, <strong>0</strong> for unattempted.
+        </p>
+
+        <div style="background:var(--bg-elevated);padding:10px;border-radius:8px;font-size:11px;margin-bottom:14px;">
+          <div style="margin-bottom:4px;color:#fff;">📌 <strong>Authentic Question Calibration:</strong></div>
+          <ul style="padding-left:16px;color:var(--text-muted);line-height:1.6;">
+            <li>Exact framing & trap patterns from 2018-2024 NEET papers</li>
+            <li>Section A (Mandatory) & Section B options</li>
+            <li>Mistakes automatically logged into Error Notebook</li>
+          </ul>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;">
+          <button class="btn btn-primary" onclick="window.NEETApp.startMockTest(10)">
+            ⚡ Rapid Drill (10 Qs)
+          </button>
+          <button class="btn btn-accent" onclick="window.NEETApp.startMockTest(20)">
+            🔥 Subject Test (20 Qs)
+          </button>
+        </div>
+      </div>
+
+      <!-- Mock Active Test Card (Hidden by default) -->
+      <div id="mock-active-card" class="card" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:12px;">
+          <div>
+            <span class="badge prio-A" id="mock-q-subject">Botany • Section A</span>
+            <div id="mock-q-counter" style="font-size:11px;color:var(--text-muted);margin-top:2px;">Question 1 of 20</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:10px;color:var(--text-muted);">TIME LEFT</div>
+            <div id="mock-timer-display" style="font-size:16px;font-weight:900;color:var(--accent-gold);">25:00</div>
+          </div>
+        </div>
+
+        <!-- Question text -->
+        <p id="mock-q-text" style="font-size:14px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:16px;">
+          Question text goes here...
+        </p>
+
+        <!-- Options Container -->
+        <div id="mock-options-container">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+          <button id="mock-btn-prev" class="btn btn-sm" onclick="window.NEETApp.mockNav('prev')">← Previous</button>
+          <button id="mock-btn-next" class="btn btn-sm btn-primary" onclick="window.NEETApp.mockNav('next')">Next →</button>
+        </div>
+      </div>
+
+      <!-- Mock Result Card (Hidden by default) -->
+      <div id="mock-result-card" class="card" style="display:none;">
+        <div class="card-title">
+          <span>📊 Mock Test Scorecard</span>
+          <span class="badge badge-streak">NTA Evaluation</span>
+        </div>
+
+        <div style="text-align:center;padding:16px 0;border-bottom:1px solid var(--border-color);margin-bottom:14px;">
+          <div style="font-size:11px;color:var(--text-muted);font-weight:700;">YOUR NEET SCORE</div>
+          <div id="result-score" style="font-size:36px;font-weight:900;color:var(--primary);margin:4px 0;">-- / 80</div>
+          <div id="result-accuracy" style="font-size:12px;font-weight:700;color:var(--accent-green);">Accuracy: 85%</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;text-align:center;margin-bottom:16px;">
+          <div style="background:var(--bg-elevated);padding:8px;border-radius:8px;">
+            <div style="color:var(--accent-green);font-weight:900;" id="result-correct">0</div>
+            <div style="font-size:10px;color:var(--text-muted);">Correct (+4)</div>
+          </div>
+          <div style="background:var(--bg-elevated);padding:8px;border-radius:8px;">
+            <div style="color:var(--accent-red);font-weight:900;" id="result-incorrect">0</div>
+            <div style="font-size:10px;color:var(--text-muted);">Wrong (-1)</div>
+          </div>
+          <div style="background:var(--bg-elevated);padding:8px;border-radius:8px;">
+            <div style="color:var(--text-muted);font-weight:900;" id="result-unattempted">0</div>
+            <div style="font-size:10px;color:var(--text-muted);">Skipped (0)</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" onclick="window.NEETApp.startMockTest(10)" style="margin-bottom:14px;">
+          🔄 Take Another Mock Test
+        </button>
+
+        <h4 style="font-size:13px;font-weight:700;color:#fff;margin-bottom:8px;">Detailed Solutions &amp; NCERT Explanations:</h4>
+        <div id="mock-solutions-list">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: MISTAKE NOTEBOOK & ROADMAP PLANNER -->
+    <section id="tab-planner" class="tab-pane">
+      <!-- Timetable Generator Engine -->
+      <div class="card">
+        <div class="card-title">
+          <span>🧠 Smart Timetable Generator</span>
+          <span class="badge prio-A" id="tt-net-hours">4.5 Hours Net</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">
+          Harmonized with your school, coaching travel, and sleep cycle:
+        </p>
+        <div id="tt-schedule-blocks">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- Mistake Notebook -->
+      <div class="card">
+        <div class="card-title">
+          <span>📕 Error Log &amp; Mistake Notebook</span>
+          <span class="badge badge-streak">Brutal Honesty</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">
+          Track question traps, silly calculation errors, and NCERT line misreads:
+        </p>
+        <div id="mistakes-list">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- 90-Day Class 11 Completion Roadmap -->
+      <div class="card">
+        <div class="card-title">
+          <span>🚀 90-Day Class 11 Completion Plan</span>
+          <span class="badge badge-countdown">Week-by-Week</span>
+        </div>
+        <div id="roadmap-90-container" style="max-height:280px;overflow-y:auto;padding-right:4px;">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- 15-Month Master Plan -->
+      <div class="card">
+        <div class="card-title">
+          <span>🏆 15-Month Full NEET Master Plan</span>
+          <span class="badge prio-A">Phase 1 to 5</span>
+        </div>
+        <div id="roadmap-15m-container">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar (6 Tabs) -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="tab-dashboard">
+      <div class="icon">🏠</div>
+      <span>Dashboard</span>
+    </button>
+    <button class="nav-item" data-tab="tab-syllabus">
+      <div class="icon">📚</div>
+      <span>Syllabus</span>
+    </button>
+    <button class="nav-item" data-tab="tab-anki">
+      <div class="icon">🧠</div>
+      <span>Anki</span>
+    </button>
+    <button class="nav-item" data-tab="tab-focus">
+      <div class="icon">⏱️</div>
+      <span>Focus</span>
+    </button>
+    <button class="nav-item" data-tab="tab-mock">
+      <div class="icon">📝</div>
+      <span>Mock Test</span>
+    </button>
+    <button class="nav-item" data-tab="tab-planner">
+      <div class="icon">📉</div>
+      <span>Planner</span>
+    </button>
+  </nav>
+
+  <!-- Settings / Personalization Modal -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="font-size:15px;font-weight:800;color:#fff;">⚙️ Personalization Engine</h3>
+        <button class="btn btn-sm" onclick="window.NEETApp.closeSettingsModal()" style="border:none;background:transparent;font-size:16px;">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Target Medical College</label>
+        <select id="settings-college-select" class="form-control">
+          <!-- Populated via JS -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NEET Exam Target Date</label>
+        <input type="date" id="settings-exam-date" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Current Academic Level</label>
+        <select id="settings-user-class" class="form-control">
+          <option value="Class 11">Class 11 (Just Started / Mid Year)</option>
+          <option value="Class 12">Class 12 (Boards + NEET)</option>
+          <option value="Dropper">Dropper / Full Time Aspirant</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Weakest Subject (Gets 40% Study Allocation)</label>
+        <select id="settings-weak-sub" class="form-control">
+          <option value="Physics">Physics (Mechanics &amp; Electrodynamics)</option>
+          <option value="Chemistry">Chemistry (Physical &amp; Organic)</option>
+          <option value="Botany">Biology: Botany</option>
+          <option value="Zoology">Biology: Zoology</option>
+        </select>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group">
+          <label class="form-label">School Hours/Day</label>
+          <input type="number" id="settings-school-hours" class="form-control" step="0.5" value="6.5">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tuition Hours/Day</label>
+          <input type="number" id="settings-tuition-hours" class="form-control" step="0.5" value="2.5">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-block" onclick="window.NEETApp.closeSettingsModal()">Cancel</button>
+        <button class="btn btn-primary btn-block" onclick="window.NEETApp.saveSettings()">Save &amp; Recalculate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
